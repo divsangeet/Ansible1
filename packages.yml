@@ -1,0 +1,40 @@
+---
+- name: Install PHP and Mariadb
+  hosts: all
+  become: yes  
+
+  tasks:
+
+    - name: Install PHP and Mariadb packages
+      package:
+        name:
+          - php
+          - mariadb
+        state: present
+      
+
+- name: Install httpd 
+  hosts: [dev]
+  become: yes  
+
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+
+
+- name: Update packages to latest versions
+  hosts: [dev]
+  become: yes  
+
+  tasks:
+
+    - name: Update all packages
+      package:
+        name: 
+          - php
+          - mariadb
+        state: latest
+
+
