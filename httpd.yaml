@@ -4,7 +4,7 @@
   become: yes  # Run tasks with sudo
 
   tasks:
-    - name: Update package cache
+    - name: Update package cache rpm
       package:
         name: "{{ item }}"
         state: latest
