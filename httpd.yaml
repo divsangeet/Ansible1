@@ -1,0 +1,44 @@
+---
+- name: Configure and start HTTP server
+  hosts: your_target_servers  # Replace with your target server(s)
+  become: yes  # Run tasks with sudo
+
+  tasks:
+    - name: Update package cache
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - apache2  # Replace with the name of your HTTP server package
+      when: ansible_os_family == 'Debian'  # Adjust for your target OS family
+
+    - name: Start and enable the HTTP server service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - apache2  # Replace with the name of your HTTP server service
+      when: ansible_os_family == 'Debian'  # Adjust for your target OS family
+
+    # Add more tasks here to customize your HTTP server configuration
+    #     # For example, copy website files, configure virtual hosts, etc.
+    #
+    #         # Optionally, you can include tasks for firewall configuration:
+    #             # - name: Allow HTTP traffic
+    #                 #   ufw:
+    #                     #     rule: allow
+    #                         #     port: 80
+    #                             #     proto: tcp
+    #
+    #                                 # - name: Reload firewall
+    #                                     #   command: ufw reload
+    #
+    #                                       # You can include additional plays if you have different target groups or roles
+    #                                         # - name: Another Play
+    #                                           #   hosts: another_target_group
+    #                                             #   tasks:
+    #                                               #     - ...
+    #
+    #                                               ...
+    #
